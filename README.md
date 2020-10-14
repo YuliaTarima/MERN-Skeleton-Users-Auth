@@ -23,3 +23,9 @@
    will run the bundled code in production
 4. Open [localhost:3000](http://localhost:3000/) in the browser
 5. Start developing
+
+####  How to update dependencies
+1. ```  npx npm-check-updates -u  ```<br/>
+2. ```  npm install  ``` 
+3. Note: update in npm modules might require changes for the application to
+ continue working
