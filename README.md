@@ -25,10 +25,17 @@
 5. Start developing
 
 ####  How to update dependencies
-    ```  npx npm-check-updates -u  ```<br/>
-    ```  npm install  ```<br/> 
+ 1.   ```  npx npm-check-updates -u  ```<br/>
+    ```  npm install  ``` or clean install ```  rm -rf node_modules  ``` <br/> 
     or<br/>
     ```  npm outdated  ```<br/>
-    ```  npm update  ```
+    ```  npm update  ``` <br/> 
+    ```  npm install  ``` or clean install ```  rm -rf node_modules  ``` 
+2. Save exact versions to npm-shrinkwrap.json with npm shrinkwrap
+   ```  rm npm-shrinkwrap.json  ```<br/>
+   ```  npm shrinkwrap  ```<br/>
+   npm install will now use exact versions in npm-shrinkwrap.json<br/>
+   If you check npm-shrinkwrap.json into git, all installs will use the exact same versions.<br/>
+   This is a way to transition out of development (all updates, all the time) to production (nobody touch nothing).  
 3. Note: update in npm modules might require changes for the application to
  continue working
