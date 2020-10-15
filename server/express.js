@@ -26,6 +26,9 @@ import theme from './../client/theme'
 const app = express()
 devBundle.compile(app) // dev mode only, comment before building for production
 
+/**
+ * Middleware
+ */
 // parse body params and attach them to req.body
 // Body parsing middleware handling the complexities of parsing streamable
 // request objects, so we can simplify browser-server communication by
@@ -54,7 +57,13 @@ const CURRENT_WORKING_DIR = process.cwd()
 // To make these static files available on requests from the client side:
 app.use('/dist', express.static(path.join(CURRENT_WORKING_DIR, 'dist')))
 
-// Mount routes
+/**
+ * Mount routes
+ */
+// The user API endpoints exposed by the Express app will allow the frontend to do CRUD
+// operations on the documents generated according to the user model. To implement these
+// working endpoints, we will write Express routes and corresponding controller callback
+// functions that should be executed when HTTP requests come in for these declared routes.
 app.use('/', userRoutes)
 app.use('/', authRoutes)
 
@@ -81,7 +90,9 @@ app.get('*', (req, res) => {
     }))
 })
 
-// Catch unauthorised errors
+/**
+ * Catch unauthorised errors
+ */
 app.use((err, req, res, next) => {
     if (err.name === 'UnauthorizedError') {
         res.status(401).json({"error": err.name + ": " + err.message})

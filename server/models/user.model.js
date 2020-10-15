@@ -5,6 +5,12 @@ const UserSchema = new mongoose.Schema({
     // mongoose.Schema function takes a schema definition object as a parameter
     // to generate a new Mongoose schema object
     // declares all the user data fields and associated properties
+
+    // The validation constraints added to the user schema fields will throw error messages,
+    // if violated when user data is saved to the database.
+    // defined in a helper method server/helpers/dbErrorHandler.js
+    // to return a relevant error message that can be propagated in the
+    // request-response cycle as appropriate.
     name: {
         type: String,
         trim: true,
