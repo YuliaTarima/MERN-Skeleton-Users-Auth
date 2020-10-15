@@ -21,17 +21,24 @@ router.route('/api/users')
 // propagating to the next function specific to the request that came in
 router.param('userId', userCtrl.userByID)
 
+// add requireSignin and hasAuthorization to the user route declarations
+// that need to be protected with authentication and also authorization
 router.route('/api/users/:userId')
+
     // When the Express app gets a GET request at '/api/users/:userId',
     // it executes the userByID controller function to load user by userId value in the param,
+    // verifies authentication
     // and then the read controller function.
     .get(authCtrl.requireSignin, userCtrl.read)
+
     // When the Express app gets a PUT request at '/api/users/:userId',
-    // it first loads the user with the :userId param value from userByID controller,
-    // and then the update controller function is executed.
+    // it first loads user with :userId param value from userByID controller,
+    // check for both authentication and authorization before CRUD operations
+    // if authenticated, the update controller function is executed.
     .put(authCtrl.requireSignin, authCtrl.hasAuthorization, userCtrl.update)
     // When the Express app gets a DELETE request at '/api/users/:userId',
     // it first loads the user by ID with the :userId param value from userByID controller,
+    // check for both authentication and authorization before CRUD operations
     // and then the remove controller function is executed.
     .delete(authCtrl.requireSignin, authCtrl.hasAuthorization, userCtrl.remove)
 

@@ -93,8 +93,12 @@ app.get('*', (req, res) => {
 /**
  * Catch unauthorised errors
  */
+// handle auth-related errors thrown by express-jwt
+// when it tries to validate JWT tokens in incoming requests
 app.use((err, req, res, next) => {
     if (err.name === 'UnauthorizedError') {
+        // express-jwt throws UnauthorizedError when token can't be validated for some reason.
+        // Catch this error and return a 401 status back to the requesting client.
         res.status(401).json({"error": err.name + ": " + err.message})
     } else if (err) {
         res.status(400).json({"error": err.name + ": " + err.message})

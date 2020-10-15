@@ -3,9 +3,14 @@ import authCtrl from '../controllers/auth.controller'
 
 const router = express.Router()
 
+// When the Express app gets a POST request at '/auth/signin',
+// it executes the signin controller function.
 router.route('/auth/signin')
-  .post(authCtrl.signin)
+    .post(authCtrl.signin)
+
+// When the Express app gets a GET request at '/auth/signout',
+// it executes the signout controller function.
 router.route('/auth/signout')
-  .get(authCtrl.signout)
+    .get(authCtrl.signout)
 
 export default router
