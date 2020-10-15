@@ -91,7 +91,7 @@ app.get('*', (req, res) => {
 })
 
 /**
- * Catch unauthorised errors
+ * Catch unauthorized errors
  */
 // handle auth-related errors thrown by express-jwt
 // when it tries to validate JWT tokens in incoming requests
