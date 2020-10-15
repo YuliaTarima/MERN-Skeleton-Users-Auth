@@ -31,9 +31,32 @@ const create = async (req, res) => {
     }
 }
 
+// find all the users from the database,
+// populate only the name, email, created and updated fields in the resulting user list,
+// return this user list as JSON objects in an array to the requesting client.
+const list = async (req, res) => {
+    try {
+        let users = await User.find().select('name email updated created')
+        res.json(users)
+    } catch (err) {
+        return res.status(400).json({
+            error: errorHandler.getErrorMessage(err)
+        })
+    }
+}
+
 /**
  * Load user and append to req.
  */
+// API endpoints for read, update, and delete
+// require a user to be retrieved from the database based on the user ID.
+// Express router will do this action first before responding to the specific
+// request to read, update, or delete.
+
+// use value in the :userId param to query the db by _id.
+// If matching user in db, append user obj to request obj in the profile key.
+// Then, the next() middleware call in userById is used to propagate control
+// to the next relevant controller function.
 const userByID = async (req, res, next, id) => {
     try {
         let user = await User.findById(id)
@@ -50,23 +73,23 @@ const userByID = async (req, res, next, id) => {
     }
 }
 
+// The read function retrieves the user details from req.profile
+// removes sensitive information, such as the hashed_password and salt values,
+// before sending the user object in the response to the requesting client.
 const read = (req, res) => {
     req.profile.hashed_password = undefined
     req.profile.salt = undefined
     return res.json(req.profile)
 }
 
-const list = async (req, res) => {
-    try {
-        let users = await User.find().select('name email updated created')
-        res.json(users)
-    } catch (err) {
-        return res.status(400).json({
-            error: errorHandler.getErrorMessage(err)
-        })
-    }
-}
-
+// The update function retrieves the user details from req.profile,
+// uses lodash module to extend and merge changes
+// that came in the request body to update the user data.
+// Before saving updated user to db, the updated field is populated with
+// the current date to reflect the last updated at timestamp.
+// On successful save of this update, the updated user object is cleaned
+// by removing the sensitive data, such as hashed_password and salt,
+// before sending the user object in the response to the requesting client.
 const update = async (req, res) => {
     try {
         let user = req.profile
@@ -83,6 +106,8 @@ const update = async (req, res) => {
     }
 }
 
+// retrieves user from req.profile and deletes user from db with remove() query
+// On successful deletion, return deleted user obj in the response to requesting client
 const remove = async (req, res) => {
     try {
         let user = req.profile
