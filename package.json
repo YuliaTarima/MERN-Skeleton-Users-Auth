@@ -54,7 +54,7 @@
     "lodash": "^4.17.20",
     "mongoose": "5.9.7",
     "react": "^16.14.0",
-    "react-dom": "16.13.1",
+    "react-dom": "16.14.0",
     "react-hot-loader": "4.12.20",
     "react-router": "5.2.0",
     "react-router-dom": "5.2.0"
